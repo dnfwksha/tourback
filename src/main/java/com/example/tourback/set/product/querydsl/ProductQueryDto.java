@@ -35,7 +35,7 @@ public class ProductQueryDto {
     private String accommodationInfo;
     private String includedServices;
     private String excludedServices;
-    private String itinerary;
+    private String itineraryText;
     private String cancellationPolicy;
     private String recommend;
 

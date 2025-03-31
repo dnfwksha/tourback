@@ -18,6 +18,7 @@ public class Product extends BaseEntity {
     private String subTitle;
     private int price;
     private String category;
+    private String recommend;
 
     @Builder.Default
     private String status="Y";

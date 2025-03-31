@@ -6,6 +6,9 @@ import com.example.tourback.set.companion.CompanionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Service
 @RequiredArgsConstructor
 public class ReservationService {
@@ -16,18 +19,19 @@ public class ReservationService {
     private final CompanionRepository companionRepository;
 
     public void save(ReservationRequestDto reservationRequestDto) {
-        long bookingNum = reservationRepository.count();
-        String bookingCode = "K" + bookingNum;
+//        long bookingNum = reservationRepository.count();
+//        String bookingCode = "K" + bookingNum;
+        String bookingCode = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssnnnnnnnnn"));
 
         Reservation reservation = new Reservation();
         reservation.setUsername(securityUtils.getCurrentUsername());
         reservation.setBookingCode(bookingCode);
+        reservation.setProductCode(reservationRequestDto.getReservationDto().getProductCode());
         reservation.setDepartureDate(reservationRequestDto.getReservationDto().getDepartureDate());
         reservation.setArrivalDate(reservationRequestDto.getReservationDto().getArrivalDate());
         reservation.setNumberOfTravelers(reservationRequestDto.getReservationDto().getNumberOfTravelers());
         reservation.setTotalCost(reservationRequestDto.getReservationDto().getTotalCost());
         reservation.setPaymentType(reservationRequestDto.getReservationDto().getPaymentType());
-        reservation.setSpecialRequests(reservationRequestDto.getReservationDto().getSpecialRequests());
         reservation.setName(reservationRequestDto.getReservationDto().getReservationName());
         reservation.setPhone(reservationRequestDto.getReservationDto().getReservationPhone());
         reservation.setNote(reservationRequestDto.getReservationDto().getNote());

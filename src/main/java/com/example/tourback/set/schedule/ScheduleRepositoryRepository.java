@@ -8,4 +8,6 @@ import java.util.List;
 public interface ScheduleRepositoryRepository extends JpaRepository<Schedule,Long>, ScheduleRepositoryCustom {
     Schedule findByProductCode(String productCode);
     List<Schedule> findDepartureDatesByProductCode(String productCode);
+
+    void deleteByProductCode(String productCode);
 }

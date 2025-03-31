@@ -26,10 +26,11 @@ public class ProductDto {
     private String category;
     @NotBlank(message = "승차지점을 입력해주세요.")
     private String departAt;
-    @Future
-    private LocalDate departureDate;
-    @Future
-    private LocalDate arrivalDate;
+//    @Future
+//    @NotNull
+//    private LocalDate departureDate;
+//    @Future
+//    private LocalDate arrivalDate;
     @Min(20)
     @Max(45)
     private int maxParticipants;
@@ -64,10 +65,3 @@ public class ProductDto {
 //    @NotNull(message = "상품 취소 규정을 입력해주세요.")
     private List<MultipartFile> cancellationPolicy;
 }
-
-
-//List<MultipartFile> images = productDto.getImages();
-//List<MultipartFile> itineraries =productDto.getItinerary();
-//List<MultipartFile> reservations = productDto.getReservation();;
-//List<MultipartFile> busStops = productDto.getBusStop();
-//List<MultipartFile> cancels = productDto.getCancellationPolicy();

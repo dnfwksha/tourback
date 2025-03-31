@@ -42,14 +42,12 @@ public class QProductDetail extends EntityPathBase<ProductDetail> {
 
     public final StringPath includedServices = createString("includedServices");
 
-    public final StringPath itinerary = createString("itinerary");
+    public final StringPath itineraryText = createString("itineraryText");
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
 
     public final StringPath productCode = createString("productCode");
-
-    public final StringPath recommend = createString("recommend");
 
     public final StringPath transportationType = createString("transportationType");
 

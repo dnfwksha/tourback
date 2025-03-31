@@ -14,7 +14,6 @@ public class ReservationDto {
     private int numberOfTravelers;
     private int totalCost;
     private String paymentType;
-    private String specialRequests;
     private String reservationName;
     private String reservationPhone;
     private String reservationBoardingLocation;

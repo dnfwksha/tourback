@@ -23,6 +23,5 @@ public class ProductDetail extends BaseEntity {
     private String accommodationInfo="N";
     private String includedServices;
     private String excludedServices;
-    private String itinerary;
-    private String recommend;
+    private String itineraryText;
 }

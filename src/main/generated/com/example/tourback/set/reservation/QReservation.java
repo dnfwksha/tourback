@@ -53,8 +53,6 @@ public class QReservation extends EntityPathBase<Reservation> {
 
     public final StringPath productCode = createString("productCode");
 
-    public final StringPath specialRequests = createString("specialRequests");
-
     public final NumberPath<Integer> totalCost = createNumber("totalCost", Integer.class);
 
     public final StringPath username = createString("username");
