@@ -1,6 +1,6 @@
 package com.example.tourback.global.jwt;
 
-import com.example.tourback.global.custom.CustomUserDetails;
+import com.example.tourback.global.logintype.custom.CustomUserDetails;
 import com.example.tourback.set.member.Member;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
@@ -22,11 +22,27 @@ public class JwtFilter extends OncePerRequestFilter {   //  jwt 토큰 검증 �
 
     private final JwtUtil jwtUtil;
 
+//    @Override
+//    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+//        String path = request.getRequestURI();
+//
+//        // 필터를 적용하지 않을 경로 지정
+//        return path.startsWith("/public/") ||
+//                path.equals("/login") ||
+//                path.equals("/reissue") ||
+//                path.startsWith("/oauth2/authorization/") ||
+//                path.equals("/api/user/me") ||
+//                path.equals("/api/product/main") ||
+//                path.equals("/api/homesliderimage/all") ||
+//                path.equals("/api/sitevisit/count") ||
+//                path.equals("/api/community/all");
+//    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        //request에서 Authorization 헤더를 찾음
-//        String accessToken = request.getHeader("access");
+
         String accessToken = null;
+        String refreshToken = null;
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
@@ -35,14 +51,23 @@ public class JwtFilter extends OncePerRequestFilter {   //  jwt 토큰 검증 �
 
                     accessToken = cookie.getValue();
                 }
+                if (cookie.getName().equals("refresh")) {
+
+                    refreshToken = cookie.getValue();
+                }
             }
         }
+        System.out.println("토큰토큰");
+        System.out.println(accessToken);
+        System.out.println(refreshToken);
 
         //Authorization 헤더 검증
         if (accessToken == null) {
+            if(refreshToken != null) {
+                response.setStatus(499);
+            }
             System.out.println("ACCESS토큰이 없습니다.");
             filterChain.doFilter(request, response);
-            response.setStatus(499);
 
             return;
         }

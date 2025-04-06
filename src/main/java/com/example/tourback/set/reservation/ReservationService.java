@@ -3,11 +3,15 @@ package com.example.tourback.set.reservation;
 import com.example.tourback.global.SecurityUtils;
 import com.example.tourback.set.companion.Companion;
 import com.example.tourback.set.companion.CompanionRepository;
+import com.example.tourback.set.reservation.querydsl.ReservationQueryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+import static com.example.tourback.set.reservation.Reservation.PaymentStatus.PAID;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +39,7 @@ public class ReservationService {
         reservation.setName(reservationRequestDto.getReservationDto().getReservationName());
         reservation.setPhone(reservationRequestDto.getReservationDto().getReservationPhone());
         reservation.setNote(reservationRequestDto.getReservationDto().getNote());
+        reservation.setPaymentStatus(PAID);
         reservation.setBoardingLocation(reservationRequestDto.getReservationDto().getReservationBoardingLocation());
         reservationRepository.save(reservation);
 
@@ -48,5 +53,9 @@ public class ReservationService {
             companion.setBoardingLocation(reservationRequestDto.getCompanionDtos().get(i).getCompanionBoardingLocation());
             companionRepository.save(companion);
         }
+    }
+
+    public List<ReservationQueryDto> myOrder() {
+        return reservationRepository.myOrder(securityUtils.getCurrentUsername());
     }
 }

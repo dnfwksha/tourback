@@ -30,7 +30,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
     */
     @Override
     public ProductQueryDto getQslProductWithProductDetail(String productCode) {
-        var result = jpaQueryFactory
+        ProductQueryDto result = jpaQueryFactory
                 .select(Projections.bean(ProductQueryDto.class,
                         product.productCode,
                         product.title,

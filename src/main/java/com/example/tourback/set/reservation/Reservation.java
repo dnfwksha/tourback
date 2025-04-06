@@ -3,6 +3,8 @@ package com.example.tourback.set.reservation;
 import com.example.tourback.global.baseEntity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -26,6 +28,13 @@ public class Reservation extends BaseEntity {
     private int numberOfTravelers;
     private int totalCost;
     private String paymentType;
+
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus paymentStatus;
+    public enum PaymentStatus {
+        PAID,UNPAID
+    }
+
     private String name;
     private String phone;
     private String boardingLocation;

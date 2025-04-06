@@ -1,6 +1,6 @@
 package com.example.tourback.set.homeSliderImage;
 
-import com.example.tourback.global.s3service.S3Upload;
+import com.example.tourback.global.s3Service.S3Upload;
 import com.example.tourback.set.homeSliderImage.querydsl.HomeSliderImageQueryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

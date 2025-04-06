@@ -1,8 +1,9 @@
 package com.example.tourback.global;
 
-import com.example.tourback.global.custom.CustomUserDetails;
+import com.example.tourback.global.logintype.custom.CustomUserDetails;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,6 +17,7 @@ public class SecurityUtils {
 
         if (authentication != null && authentication.isAuthenticated()
                 && !"anonymousUser".equals(authentication.getPrincipal())) {
+
             return authentication.getName();
         }
 

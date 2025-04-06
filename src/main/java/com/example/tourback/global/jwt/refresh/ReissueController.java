@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +27,7 @@ public class ReissueController {
 
     @PostMapping("/reissue")
     public ResponseEntity<?> reissue(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("리이슈");
         //get refresh token
         String refresh = null;
         Cookie[] cookies = request.getCookies();
@@ -38,16 +40,17 @@ public class ReissueController {
                 }
             }
         }
-
+        System.out.println(refresh);
         if (refresh == null) {
-
+            System.out.println("리프레시 널이냐");
             //response status code
-            return new ResponseEntity<>("refresh token null", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("refresh token null", HttpStatusCode.valueOf(498));
         }
 
         //expired check
         try {
             jwtUtil.isExpired(refresh);
+            System.out.println("리프레시 만료됐냐");
         } catch (ExpiredJwtException e) {
 
             //response status code
@@ -57,6 +60,7 @@ public class ReissueController {
         // 토큰이 refresh인지 확인 (발급시 페이로드에 명시)
         String category = jwtUtil.getCategory(refresh);
         if (!category.equals("refresh")) {
+            System.out.println("리프레시 카테고리 뭐냐");
 
             //response status code
             return new ResponseEntity<>("invalid refresh token", HttpStatus.BAD_REQUEST);
@@ -64,6 +68,7 @@ public class ReissueController {
 
         Boolean isExists = refreshRepository.existsByRefresh(refresh);
         if (!isExists) {
+            System.out.println("리프레시 있지?");
             return new ResponseEntity<>("invalid refresh token", HttpStatus.BAD_REQUEST);
         }
 
@@ -71,11 +76,11 @@ public class ReissueController {
         String role = jwtUtil.getRole(refresh);
 
         //make new JWT
-//        String newAccess = jwtUtil.createJwt("access", username, role, 1000L * 10);
-        String newAccess = jwtUtil.createJwt("access", username, role, 1000L * 60 * 10);
+        String newAccess = jwtUtil.createJwt("access", username, role, 1000L * 60 * 15);
         String newRefresh = jwtUtil.createJwt("refresh", username, role, 1000L * 60 * 60 * 24);
 
         try {
+            System.out.println("리프레시 기존꺼 지워");
             refreshRepository.deleteByRefresh(refresh);
         } catch (Exception e) {
 
@@ -87,16 +92,16 @@ public class ReissueController {
 //        response.setHeader("access", newAccess);
 //        response.addCookie(createCookie("refresh", newRefresh));
 
-        addCookieWithSameSite(response, "access", newAccess, "Strict", 60 * 10);
+        addCookieWithSameSite(response, "access", newAccess, "Strict", 60 * 15);
         addCookieWithSameSite(response, "refresh", newRefresh, "Strict", 60 * 60 * 24);
 
-        Map<String, Object> responseBody = new HashMap<>();
-        Map<String, String> res = new HashMap<>();
-        responseBody.put("access", newAccess);
-        responseBody.put("user", res);
-        res.put("role", role);
-        res.put("username", username);
-        return new ResponseEntity<>(responseBody, HttpStatus.OK);
+//        Map<String, Object> responseBody = new HashMap<>();
+//        Map<String, String> res = new HashMap<>();
+//        responseBody.put("access", newAccess);
+//        responseBody.put("user", res);
+//        res.put("role", role);
+//        res.put("username", username);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 //    private Cookie createCookie(String key, String value) {

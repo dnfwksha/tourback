@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 import static com.example.tourback.set.schedule.QSchedule.schedule;
-import static com.querydsl.jpa.JPAExpressions.select;
 @RequiredArgsConstructor
 public class ScheduleRepositoryRepositoryImpl implements ScheduleRepositoryCustom {
 
@@ -17,7 +16,8 @@ public class ScheduleRepositoryRepositoryImpl implements ScheduleRepositoryCusto
     public List<ScheduleQueryDto> findScheduleByProductCode(String productCode) {
         return jpaQueryFactory
                 .select(Projections.bean(ScheduleQueryDto.class,
-                        schedule.departureDate))
+                        schedule.departureDate
+                ))
                 .from(schedule)
                 .where(schedule.productCode.eq(productCode))
                 .fetch();

@@ -1,6 +1,6 @@
 package com.example.tourback.set.product;
 
-import com.example.tourback.global.s3service.S3Upload;
+import com.example.tourback.global.s3Service.S3Upload;
 import com.example.tourback.set.product.image.ProductImage;
 import com.example.tourback.set.product.image.ProductImageRepository;
 import com.example.tourback.set.product.querydsl.ProductQueryDto;

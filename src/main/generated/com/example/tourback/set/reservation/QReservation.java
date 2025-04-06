@@ -47,6 +47,8 @@ public class QReservation extends EntityPathBase<Reservation> {
 
     public final NumberPath<Integer> numberOfTravelers = createNumber("numberOfTravelers", Integer.class);
 
+    public final EnumPath<Reservation.PaymentStatus> paymentStatus = createEnum("paymentStatus", Reservation.PaymentStatus.class);
+
     public final StringPath paymentType = createString("paymentType");
 
     public final StringPath phone = createString("phone");

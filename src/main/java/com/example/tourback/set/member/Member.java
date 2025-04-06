@@ -3,6 +3,8 @@ package com.example.tourback.set.member;
 import com.example.tourback.global.baseEntity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -38,10 +40,9 @@ public class Member extends BaseEntity {
     private String marketingConsent;
 
     @Column(nullable = false)
-    private Role role;
+    @Enumerated(EnumType.STRING)
+    private Role role= Role.ROLE_USER;
     public enum Role{
         ROLE_USER,ROLE_ADMIN
     }
-
-
 }
